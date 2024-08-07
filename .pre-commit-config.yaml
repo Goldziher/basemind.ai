@@ -1,13 +1,13 @@
 default_stages: [commit]
 repos:
     - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
-      rev: 'v9.13.0'
+      rev: 'v9.16.0'
       hooks:
           - id: commitlint
             stages: [commit-msg]
             additional_dependencies: ['@commitlint/config-conventional']
     - repo: https://github.com/pre-commit/pre-commit-hooks
-      rev: 'v4.5.0'
+      rev: 'v4.6.0'
       hooks:
           - id: trailing-whitespace
           - id: end-of-file-fixer
@@ -18,24 +18,11 @@ repos:
       hooks:
           - id: shellcheck
     - repo: https://github.com/hadolint/hadolint
-      rev: v2.12.1-beta
+      rev: v2.13.0-beta
       hooks:
           - id: hadolint-docker
-    - repo: https://github.com/pre-commit/mirrors-prettier
-      rev: 'v4.0.0-alpha.8'
-      hooks:
-          - id: prettier
-            exclude: 'go.mod|gen/ts|tsx|ts'
-    - repo: https://github.com/pre-commit/mirrors-eslint
-      rev: 'v9.0.0-beta.2'
-      hooks:
-          - id: eslint
-            files: \.tsx?$
-            types: [file]
-            args: [--fix, --no-ignore]
-            exclude: 'gen/ts'
     - repo: https://github.com/golangci/golangci-lint
-      rev: 'v1.56.2'
+      rev: 'v1.59.1'
       hooks:
           - id: golangci-lint
             args: ['--timeout', '3m0s']
@@ -45,21 +32,12 @@ repos:
       hooks:
           - id: golines
     - repo: https://github.com/bufbuild/buf
-      rev: v1.30.0
+      rev: v1.35.1
       hooks:
           - id: buf-format
           - id: buf-lint
-    - repo: https://github.com/sqlfluff/sqlfluff
-      rev: 3.0.1
-      hooks:
-          - id: sqlfluff-fix
-            exclude: 'sql/migrations'
-    - repo: https://github.com/aquasecurity/tfsec
-      rev: v1.28.5
-      hooks:
-          - id: tfsec
     - repo: https://github.com/codespell-project/codespell
-      rev: v2.2.6
+      rev: v2.3.0
       hooks:
           - id: codespell
             additional_dependencies: ['tomli']

@@ -1,7 +1,0 @@
-[tool.sqlfluff.core]
-dialect = "postgres"
-max_line_length = 120
-
-[tool.codespell]
-skip = '**.xml,go.sum,**/go.sum,pnpm-lock.yaml,**/pnpm-lock.yaml'
-ignore-regex = "afterAll|publishErr"

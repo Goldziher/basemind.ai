@@ -23,7 +23,7 @@ services:
             start_period: 5s
     api-gateway:
         build:
-            dockerfile: docker/Dockerfile.go-services
+            dockerfile: Dockerfile
             context: .
             target: install
             args:
@@ -60,7 +60,7 @@ services:
             ]
     dashboard-backend:
         build:
-            dockerfile: docker/Dockerfile.go-services
+            dockerfile: Dockerfile
             context: .
             target: install
             args:

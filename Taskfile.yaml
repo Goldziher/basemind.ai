@@ -1,110 +1,19 @@
 version: '3'
 
 tasks:
-    # project management
-    update-brew:
-        cmds:
-            - brew update && brew upgrade && brew cleanup || true
     setup:
-        desc: Setup the project dependencies
+        desc: Setup the project
         cmds:
-            - task: update-brew
             - git submodule update --init --recursive || true
             - git submodule update --recursive --remote
-            - command -v pnpm &> /dev/null || brew install pnpm
-            - command -v pre-commit &> /dev/null || brew install pre-commit
-            - command -v sqlc &> /dev/null || brew install sqlc
-            - command -v atlas &> /dev/null || brew install ariga/tap/atlas
-            - command -v buf &> /dev/null || brew install bufbuild/buf/buf
-            - command -v terraform &> /dev/null || brew tap hashicorp/tap && brew install hashicorp/tap/terraform
-            - command -v tflint &> /dev/null || brew install tflint
-            - command -v gcloud &> /dev/null || curl https://sdk.cloud.google.com | bash
-            - pnpm install -r
             - go mod download
             - pre-commit install && pre-commit install --hook-type commit-msg && pre-commit install-hooks
     update:
         desc: Update the project dependencies
         cmds:
-            - task: update-brew
-            - pnpm add -g pnpm && pnpm update -r --latest
             - go mod tidy && go get -u ./... &> /dev/null
             - pre-commit autoupdate
     lint:
         desc: Lint the project
         cmds:
             - pre-commit run --show-diff-on-failure --color=always --all-files
-    # database
-    db:up:
-        desc: Bring up the local database
-        cmds:
-            - docker compose stop && docker compose up db --detach
-    db:down:
-        desc: Tear down the local database
-        cmds:
-            - docker compose down db
-    migrations:apply:
-        desc: Apply the migrations to the local database
-        cmds:
-            - task: db:up
-            - sleep 2
-            - atlas migrate apply --dir "file://sql/migrations" --url "postgresql://basemind:basemind@localhost:5432/basemind?search_path=public&sslmode=disable"
-    migrations:create:
-        desc: Create a new migration
-        cmds:
-            - task: db:up
-            - sleep 2
-            - atlas migrate diff {{.CLI_ARGS}} --dir "file://sql/migrations" --to "file://sql/schema.sql" --dev-url "postgresql://basemind:basemind@localhost:5432/basemind?search_path=public&sslmode=disable"
-    slqc:generate:
-        desc: Generate the database code from the sqlc.yaml file
-        cmds:
-            - rm -rf shared/go/db/models
-            - sqlc generate
-    slqc:vet:
-        desc: Lint the database schema
-        cmds:
-            - task: db:up
-            - sleep 2
-            - sqlc vet
-    # protobuf
-    buf:generate:
-        desc: Generate gRPC types and code from proto files
-        cmds:
-            - rm -rf gen
-            - npx buf generate
-    buf:lint:
-        desc: Lint the protobuf files
-        cmds:
-            - npx buf lint
-    buf:format:
-        desc: Format the protobuf files
-        cmds:
-            - npx buf format
-    # testing
-    e2e:seed:
-        desc: Seed the local database with testing data
-        cmds:
-            - task: db:up
-            - go run e2e/main.go seed
-    e2e:clean:
-        desc: Clean the local database of all testing data
-        cmds:
-            - task: db:up
-            - go run e2e/main.go clean
-    e2e:create-jwt:
-        desc: Create a JWT from the given applicationId arg
-        cmds:
-            - go run e2e/main.go create-jwt {{.CLI_ARGS}}
-    # gcp commands
-    gcp:deploy-emailsender:
-        desc: Deploys the email sender cloud function to GCP
-        dir: cloud-functions/emailsender
-        cmds:
-            - |
-                gcloud functions deploy email-sender \
-                    --project={{.CLI_ARGS}} \
-                    --gen2 \
-                    --runtime=go121 \
-                    --region=europe-west3    \
-                    --source=. \
-                    --entry-point=SendgridEmailPubSub \
-                    --trigger-topic=send-email
