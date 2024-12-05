@@ -3,21 +3,11 @@ managed:
     enabled: true
     optimize_for: LITE_RUNTIME
 plugins:
-    # typescript
-    - plugin: buf.build/community/timostamm-protobuf-ts
-      out: gen/ts
-      opt:
-          - generate_dependencies
-          - long_type_string
-          - output_javascript_es2020
-          - server_grpc1
-          - force_client_none
-    # golang
     - plugin: buf.build/grpc/go
-      out: gen/go
+      out: gen
       opt:
           - paths=source_relative
     - plugin: buf.build/protocolbuffers/go
-      out: gen/go
+      out: gen
       opt:
           - paths=source_relative

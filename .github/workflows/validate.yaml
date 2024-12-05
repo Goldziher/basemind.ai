@@ -13,30 +13,6 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 21
-            - name: Install PNPM
-              uses: pnpm/action-setup@v3.0.0
-              id: pnpm-install
-              with:
-                  version: 8
-                  run_install: false
-            - name: Setup PNPM Cache
-              id: pnpm-cache
-              shell: bash
-              run: |
-                  echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-            - name: Load Cached Node Dependencies
-              uses: actions/cache@v4
-              with:
-                  path: ${{ env.STORE_PATH }}
-                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pnpm-store-
-            - name: Install Node dependencies
-              run: pnpm install -r
             - name: Setup Golang
               uses: actions/setup-go@v5
               with:
@@ -55,7 +31,7 @@ jobs:
             - name: Setup Python
               uses: actions/setup-python@v5
               with:
-                  python-version: '3.11'
+                  python-version: '3.12'
             - name: Install Pre-Commit
               run: python -m pip install pre-commit && pre-commit install
             - name: Load Cached Pre-Commit Dependencies

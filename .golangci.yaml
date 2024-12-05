@@ -35,7 +35,6 @@ linters-settings:
     goconst:
         ignore-tests: true
     govet:
-        check-shadowing: true
         disable-all: true
     decorder:
         dec-order:
@@ -43,9 +42,6 @@ linters-settings:
             - type
             - var
             - func
-
-    maintidx:
-        min-index: 80
 linters:
     enable:
         - asasalint

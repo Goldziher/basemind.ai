@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/basemind-ai/monorepo/gen/proto/v1"
 	"github.com/basemind-ai/monorepo/internal/utils/config"
 	"github.com/basemind-ai/monorepo/internal/utils/cryptoutils"
 	"github.com/basemind-ai/monorepo/internal/utils/datatypes"
@@ -182,8 +181,7 @@ func CheckProjectCredits(
 // We intentionally use the projectID to cache here - because we need to invalidate the cache if the provider api key is deleted.
 func CreateProviderAPIKeyContext(
 	ctx context.Context,
-	projectID pgtype.UUID,
-	modelVendor models.ModelVendor,
+
 ) context.Context {
 	providerKey, providerKeyRetrievalErr := rediscache.With[models.RetrieveProviderKeyRow](
 		ctx,

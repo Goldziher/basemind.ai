@@ -3,14 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/basemind-ai/monorepo/gen/proto/v1"
-	"github.com/basemind-ai/monorepo/internal/utils/config"
-	grpcutils2 "github.com/basemind-ai/monorepo/internal/utils/grpcutils"
-	"github.com/basemind-ai/monorepo/internal/utils/logging"
-	"github.com/basemind-ai/monorepo/internal/utils/rediscache"
-	"github.com/basemind-ai/monorepo/services/api-gateway/internal/connectors"
-	"github.com/basemind-ai/monorepo/services/api-gateway/internal/services"
-	"github.com/basemind-ai/monorepo/shared/go/db"
+	"github.com/basemind-ai/gateway/gen/gateway/v2"
+	"github.com/basemind-ai/gateway/internal/server"
+	"github.com/basemind-ai/gateway/internal/utils/config"
+	"github.com/basemind-ai/gateway/internal/utils/grpcutils"
+	"github.com/basemind-ai/gateway/internal/utils/logging"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
@@ -35,28 +32,14 @@ func main() {
 
 	logging.Configure(cfg.Environment != "production")
 
-	connectors.Init(ctx)
-
-	rediscache.New(cfg.RedisURL)
-
-	conn, connErr := db.CreateConnection(ctx, cfg.DatabaseURL)
-	if connErr != nil {
-		log.Fatal().Err(connErr).Msg("failed to connect to DB")
-	}
-
-	defer conn.Close()
-
-	server := grpcutils2.CreateGRPCServer(
-		grpcutils2.Options{
-			AuthHandler: grpcutils2.NewAuthHandler(cfg.JWTSecret).HandleAuth,
+	srv := grpcutils.CreateGRPCServer(
+		grpcutils.Options{
+			AuthHandler: grpcutils.NewAuthHandler(cfg.JWTSecret).HandleAuth,
 			Environment: cfg.Environment,
 			ServiceName: "api-gateway",
-			ServiceRegistrars: []grpcutils2.ServiceRegistrar{
+			ServiceRegistrars: []grpcutils.ServiceRegistrar{
 				func(s grpc.ServiceRegistrar) {
-					gateway.gateway.RegisterAPIGatewayServiceServer(s, services.APIGatewayServer{})
-				},
-				func(s grpc.ServiceRegistrar) {
-					ptesting.RegisterPromptTestingServiceServer(s, services.PromptTestingServer{})
+					gateway.RegisterAPIGatewayServiceServer(s, server.APIGatewayServer{})
 				},
 			},
 		},
@@ -73,12 +56,12 @@ func main() {
 		}
 
 		log.Info().Str("service", "api-gateway").Str("address", address).Msg("server starting")
-		return server.Serve(listen)
+		return srv.Serve(listen)
 	})
 
 	g.Go(func() error {
 		<-gCtx.Done()
-		server.Stop()
+		srv.Stop()
 		return nil
 	})
 

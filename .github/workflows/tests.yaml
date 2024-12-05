@@ -1,30 +1,12 @@
-name: 'Tests (Golang)'
+name: 'Tests'
 on:
     push:
         branches:
             - main
-        paths:
-            - '.github/workflows/tests-go.yaml'
-            - 'gen/go/**'
-            - 'go.*'
-            - 'services/api-gateway/**'
-            - 'services/dashboard-backend/**'
-            - 'shared/go/**'
     pull_request:
         branches:
             - main
-        paths:
-            - 'gen/go/**'
-            - 'go.*'
-            - 'services/api-gateway/**'
-            - 'services/dashboard-backend/**'
-            - 'shared/go/**'
 env:
-    GCP_OIDC_PROVIDER_NAME: github-provider
-    GCP_PROJECT_ID: basemind-ai-development
-    GCP_PROJECT_NUMBER: 78794879644
-    GCP_SERVICE_ACCOUNT_NAME: firebase-adminsdk-frgvx
-    GCP_WORKLOAD_IDENTITY_POOL: dev-pool
     TEST_SLEEP_TIMEOUT: 1s
     DEEPSOURCE_DSN: ${{secrets.DEEPSOURCE_DSN}}
 jobs:
@@ -55,15 +37,6 @@ jobs:
               if: steps.cached-go-dependencies.outputs.cache-hit != 'true'
               shell: bash
               run: go get -v -t ./...
-            - name: Install Atlas
-              shell: bash
-              run: curl -sSf https://atlasgo.sh | sh
-            - name: Authenticate with GCP
-              id: auth
-              uses: google-github-actions/auth@v2
-              with:
-                  workload_identity_provider: projects/${{env.GCP_PROJECT_NUMBER}}/locations/global/workloadIdentityPools/${{env.GCP_WORKLOAD_IDENTITY_POOL}}/providers/${{env.GCP_OIDC_PROVIDER_NAME}}
-                  service_account: ${{env.GCP_SERVICE_ACCOUNT_NAME}}@${{env.GCP_PROJECT_ID}}.iam.gserviceaccount.com
             - name: Test
               run: go test ./... -v -p 1 -coverprofile=cover.out
             - name: Upload Coverage Report

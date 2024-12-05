@@ -2,7 +2,7 @@ version: '3'
 
 tasks:
     setup:
-        desc: Setup the project
+        desc: Setup the project dependencies
         cmds:
             - git submodule update --init --recursive || true
             - git submodule update --recursive --remote
@@ -17,3 +17,17 @@ tasks:
         desc: Lint the project
         cmds:
             - pre-commit run --show-diff-on-failure --color=always --all-files
+    # protobuf
+    buf:generate:
+        desc: Generate gRPC types and code from proto files
+        cmds:
+            - rm -rf gen
+            - npx buf generate
+    buf:lint:
+        desc: Lint the protobuf files
+        cmds:
+            - npx buf lint
+    buf:format:
+        desc: Format the protobuf files
+        cmds:
+            - npx buf format

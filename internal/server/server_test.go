@@ -1,10 +1,9 @@
-package internal_test
+package server
 
 import (
 	"context"
 	"encoding/json"
 	"github.com/basemind-ai/monorepo/e2e/factories"
-	"github.com/basemind-ai/monorepo/gen/proto/v1"
 	"github.com/basemind-ai/monorepo/internal/utils/datatypes"
 	"github.com/basemind-ai/monorepo/internal/utils/exc"
 	grpcutils2 "github.com/basemind-ai/monorepo/internal/utils/grpcutils"

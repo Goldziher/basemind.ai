@@ -1,13 +1,14 @@
-package internal
+package server
 
 import (
 	"context"
 	"fmt"
-	"github.com/basemind-ai/monorepo/gen/proto/v1"
-	"github.com/basemind-ai/monorepo/internal/utils"
-	"github.com/basemind-ai/monorepo/internal/utils/grpcutils"
-	"github.com/basemind-ai/monorepo/internal/utils/rediscache"
-	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/basemind-ai/gateway/gen/gateway/v2"
+	"github.com/basemind-ai/gateway/internal/dto"
+	"github.com/basemind-ai/gateway/internal/utils"
+	"github.com/basemind-ai/gateway/internal/utils/grpcutils"
+	"github.com/basemind-ai/gateway/internal/utils/rediscache"
+
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -15,42 +16,23 @@ import (
 )
 
 type APIGatewayServer struct {
-	gateway.gateway
+	gateway.APIGatewayServiceServer
 }
 
 func (APIGatewayServer) RequestPrompt(
 	ctx context.Context,
 	request *gateway.PromptRequest,
 ) (*gateway.PromptResponse, error) {
-	cacheKey := db.UUIDToString(&applicationID)
-	if request.PromptConfigId != nil {
-		cacheKey = fmt.Sprintf("%s:%s", db.UUIDToString(&applicationID), *request.PromptConfigId)
-	}
+	config := dto.RequestConfigurationDTO{}
 
-	requestConfigurationDTO, retrievalErr := rediscache.With[dto.RequestConfigurationDTO](
-		ctx,
-		cacheKey,
-		&dto.RequestConfigurationDTO{},
-		time.Minute*30,
-		utils.RetrieveRequestConfiguration(ctx, applicationID, request.PromptConfigId),
-	)
-	if retrievalErr != nil {
-		log.Error().Err(retrievalErr).Msg("failed to retrieve the request configuration from Redis")
-		return nil, status.Error(
-			codes.NotFound,
-			retrievalErr.Error(),
-		)
-	}
-
-	if validationError := utils.ValidateExpectedVariables(request.TemplateVariables, requestConfigurationDTO.PromptConfigData.ExpectedTemplateVariables); validationError != nil {
+	if validationError := utils.ValidateExpectedVariables(request.TemplateVariables, config); validationError != nil {
 		// the validation error is already a grpc status error
 		return nil, validationError
 	}
 
 	providerKeyContext := utils.CreateProviderAPIKeyContext(
 		ctx,
-		projectID,
-		requestConfigurationDTO.PromptConfigData.ModelVendor,
+		config.PromptConfig.ModelConfig,
 	)
 
 	if promptResult.Error != nil {

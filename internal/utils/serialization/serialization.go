@@ -1,9 +1,9 @@
 package serialization
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/basemind-ai/monorepo/internal/utils/exc"
+	"github.com/basemind-ai/gateway/internal/utils/exc"
+	"github.com/goccy/go-json"
 	"io"
 	"net/http"
 )

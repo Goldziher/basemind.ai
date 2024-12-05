@@ -1,7 +1,7 @@
 package serialization_test
 
 import (
-	"github.com/basemind-ai/monorepo/internal/utils/serialization"
+	"github.com/basemind-ai/gateway/internal/utils/serialization"
 	"io"
 	"net/http"
 	"net/http/httptest"
