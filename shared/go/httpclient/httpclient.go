@@ -13,8 +13,8 @@ import (
 
 // Client is a wrapper around the http client that exposes semantic receivers.
 type Client struct {
-	BaseURL    string
 	HTTPClient *http.Client
+	BaseURL    string
 }
 
 // New returns a new http client instance.

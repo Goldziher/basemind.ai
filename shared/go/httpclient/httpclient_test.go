@@ -84,8 +84,8 @@ func TestClient(t *testing.T) {
 	})
 
 	for _, testCase := range []struct {
-		Method string
 		Body   *Body
+		Method string
 	}{
 		{
 			Method: "GET",

@@ -19,8 +19,8 @@ RETURNING id, name, is_internal, created_at, deleted_at, application_id
 `
 
 type CreateAPIKeyParams struct {
-	ApplicationID pgtype.UUID `json:"applicationId"`
 	Name          string      `json:"name"`
+	ApplicationID pgtype.UUID `json:"applicationId"`
 	IsInternal    bool        `json:"isInternal"`
 }
 
@@ -64,9 +64,9 @@ ORDER BY t.created_at
 `
 
 type RetrieveAPIKeysRow struct {
-	ID        pgtype.UUID        `json:"id"`
-	Name      string             `json:"name"`
 	CreatedAt pgtype.Timestamptz `json:"createdAt"`
+	Name      string             `json:"name"`
+	ID        pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrieveAPIKeys(ctx context.Context, id pgtype.UUID) ([]RetrieveAPIKeysRow, error) {

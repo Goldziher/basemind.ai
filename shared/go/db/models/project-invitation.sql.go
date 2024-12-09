@@ -33,9 +33,9 @@ WHERE up.id = $1 AND p.deleted_at IS NULL
 `
 
 type RetrieveProjectInvitationByIDRow struct {
-	ID         pgtype.UUID          `json:"id"`
 	Email      string               `json:"email"`
 	Permission AccessPermissionType `json:"permission"`
+	ID         pgtype.UUID          `json:"id"`
 	ProjectID  pgtype.UUID          `json:"projectId"`
 }
 
@@ -66,11 +66,11 @@ ORDER BY up.created_at
 `
 
 type RetrieveProjectInvitationsRow struct {
-	ID         pgtype.UUID          `json:"id"`
-	Email      string               `json:"email"`
-	Permission AccessPermissionType `json:"permission"`
 	CreatedAt  pgtype.Timestamptz   `json:"createdAt"`
 	UpdatedAt  pgtype.Timestamptz   `json:"updatedAt"`
+	Email      string               `json:"email"`
+	Permission AccessPermissionType `json:"permission"`
+	ID         pgtype.UUID          `json:"id"`
 }
 
 func (q *Queries) RetrieveProjectInvitations(ctx context.Context, projectID pgtype.UUID) ([]RetrieveProjectInvitationsRow, error) {
@@ -112,8 +112,8 @@ RETURNING id, email, project_id, permission, created_at, updated_at
 
 type UpsertProjectInvitationParams struct {
 	Email      string               `json:"email"`
-	ProjectID  pgtype.UUID          `json:"projectId"`
 	Permission AccessPermissionType `json:"permission"`
+	ProjectID  pgtype.UUID          `json:"projectId"`
 }
 
 func (q *Queries) UpsertProjectInvitation(ctx context.Context, arg UpsertProjectInvitationParams) (ProjectInvitation, error) {

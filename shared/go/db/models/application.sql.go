@@ -23,9 +23,9 @@ RETURNING id, description, name, created_at, updated_at, deleted_at, project_id
 `
 
 type CreateApplicationParams struct {
-	ProjectID   pgtype.UUID `json:"projectId"`
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
+	ProjectID   pgtype.UUID `json:"projectId"`
 }
 
 // -- application
@@ -70,11 +70,11 @@ WHERE
 `
 
 type RetrieveApplicationRow struct {
-	ID          pgtype.UUID        `json:"id"`
-	Description string             `json:"description"`
-	Name        string             `json:"name"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	UpdatedAt   pgtype.Timestamptz `json:"updatedAt"`
+	Description string             `json:"description"`
+	Name        string             `json:"name"`
+	ID          pgtype.UUID        `json:"id"`
 	ProjectID   pgtype.UUID        `json:"projectId"`
 }
 
@@ -103,9 +103,9 @@ WHERE
 `
 
 type RetrieveApplicationAPIRequestCountParams struct {
-	ID          pgtype.UUID        `json:"id"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	CreatedAt_2 pgtype.Timestamptz `json:"createdAt2"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrieveApplicationAPIRequestCount(ctx context.Context, arg RetrieveApplicationAPIRequestCountParams) (int64, error) {
@@ -126,9 +126,9 @@ WHERE
 `
 
 type RetrieveApplicationTokensTotalCostParams struct {
-	ID          pgtype.UUID        `json:"id"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	CreatedAt_2 pgtype.Timestamptz `json:"createdAt2"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrieveApplicationTokensTotalCost(ctx context.Context, arg RetrieveApplicationTokensTotalCostParams) (pgtype.Numeric, error) {
@@ -153,11 +153,11 @@ WHERE
 `
 
 type RetrieveApplicationsRow struct {
-	ID          pgtype.UUID        `json:"id"`
-	Description string             `json:"description"`
-	Name        string             `json:"name"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	UpdatedAt   pgtype.Timestamptz `json:"updatedAt"`
+	Description string             `json:"description"`
+	Name        string             `json:"name"`
+	ID          pgtype.UUID        `json:"id"`
 	ProjectID   pgtype.UUID        `json:"projectId"`
 }
 
@@ -201,9 +201,9 @@ RETURNING id, description, name, created_at, updated_at, deleted_at, project_id
 `
 
 type UpdateApplicationParams struct {
-	ID          pgtype.UUID `json:"id"`
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
+	ID          pgtype.UUID `json:"id"`
 }
 
 func (q *Queries) UpdateApplication(ctx context.Context, arg UpdateApplicationParams) (Application, error) {

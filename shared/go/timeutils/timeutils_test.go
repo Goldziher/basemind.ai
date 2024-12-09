@@ -24,9 +24,9 @@ func TestGetFirstDayOfMonth(t *testing.T) {
 
 func TestParseDate(t *testing.T) {
 	testCases := []struct {
-		date     string
 		fallback time.Time
 		expected time.Time
+		date     string
 	}{
 		{
 			date:     "2022-01-01T00:00:00Z",

@@ -70,8 +70,8 @@ func TestAPIError(t *testing.T) {
 
 	for _, testCase := range []struct {
 		APIErrType      *apierror.APIError
-		ExpectedStatus  int
 		ExpectedMessage string
+		ExpectedStatus  int
 	}{
 		{
 			APIErrType:      apierror.NotFound("err"),

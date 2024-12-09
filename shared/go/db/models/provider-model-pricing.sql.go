@@ -29,13 +29,13 @@ VALUES (
 `
 
 type CreateProviderModelPricingParams struct {
+	ActiveFromDate   pgtype.Date    `json:"activeFromDate"`
+	ActiveToDate     pgtype.Date    `json:"activeToDate"`
 	ModelType        ModelType      `json:"modelType"`
 	ModelVendor      ModelVendor    `json:"modelVendor"`
 	InputTokenPrice  pgtype.Numeric `json:"inputTokenPrice"`
 	OutputTokenPrice pgtype.Numeric `json:"outputTokenPrice"`
 	TokenUnitSize    int32          `json:"tokenUnitSize"`
-	ActiveFromDate   pgtype.Date    `json:"activeFromDate"`
-	ActiveToDate     pgtype.Date    `json:"activeToDate"`
 }
 
 // provider model pricing
@@ -90,14 +90,14 @@ type RetrieveActiveProviderModelPricingParams struct {
 }
 
 type RetrieveActiveProviderModelPricingRow struct {
-	ID               pgtype.UUID    `json:"id"`
+	ActiveFromDate   pgtype.Date    `json:"activeFromDate"`
+	ActiveToDate     pgtype.Date    `json:"activeToDate"`
 	ModelType        ModelType      `json:"modelType"`
 	ModelVendor      ModelVendor    `json:"modelVendor"`
 	InputTokenPrice  pgtype.Numeric `json:"inputTokenPrice"`
 	OutputTokenPrice pgtype.Numeric `json:"outputTokenPrice"`
 	TokenUnitSize    int32          `json:"tokenUnitSize"`
-	ActiveFromDate   pgtype.Date    `json:"activeFromDate"`
-	ActiveToDate     pgtype.Date    `json:"activeToDate"`
+	ID               pgtype.UUID    `json:"id"`
 }
 
 func (q *Queries) RetrieveActiveProviderModelPricing(ctx context.Context, arg RetrieveActiveProviderModelPricingParams) (RetrieveActiveProviderModelPricingRow, error) {

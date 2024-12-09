@@ -257,8 +257,8 @@ func TestPromptConfigRepository(t *testing.T) { //nolint: revive
 	t.Run("UpdatePromptConfig", func(t *testing.T) {
 		t.Run("updates prompt config", func(t *testing.T) {
 			testCases := []struct {
-				Name string
 				Dto  dto.PromptConfigUpdateDTO
+				Name string
 			}{
 				{
 					Name: "updates prompt config name",

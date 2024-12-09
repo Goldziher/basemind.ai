@@ -114,14 +114,14 @@ ORDER BY user_account.display_name
 `
 
 type RetrieveProjectUserAccountsRow struct {
-	ID          pgtype.UUID              `json:"id"`
+	CreatedAt   pgtype.Timestamptz       `json:"createdAt"`
 	DisplayName string                   `json:"displayName"`
 	Email       string                   `json:"email"`
 	FirebaseID  string                   `json:"firebaseId"`
 	PhoneNumber string                   `json:"phoneNumber"`
 	PhotoUrl    string                   `json:"photoUrl"`
-	CreatedAt   pgtype.Timestamptz       `json:"createdAt"`
 	Permission  NullAccessPermissionType `json:"permission"`
+	ID          pgtype.UUID              `json:"id"`
 }
 
 func (q *Queries) RetrieveProjectUserAccounts(ctx context.Context, id pgtype.UUID) ([]RetrieveProjectUserAccountsRow, error) {
@@ -250,12 +250,12 @@ RETURNING id, display_name, email, firebase_id, phone_number, photo_url, created
 `
 
 type UpdateUserAccountParams struct {
-	ID          pgtype.UUID `json:"id"`
 	Email       string      `json:"email"`
 	DisplayName string      `json:"displayName"`
 	FirebaseID  string      `json:"firebaseId"`
 	PhoneNumber string      `json:"phoneNumber"`
 	PhotoUrl    string      `json:"photoUrl"`
+	ID          pgtype.UUID `json:"id"`
 }
 
 func (q *Queries) UpdateUserAccount(ctx context.Context, arg UpdateUserAccountParams) (UserAccount, error) {

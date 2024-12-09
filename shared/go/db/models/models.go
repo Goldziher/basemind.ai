@@ -187,119 +187,119 @@ func (ns NullPromptFinishReason) Value() (driver.Value, error) {
 }
 
 type ApiKey struct {
-	ID            pgtype.UUID        `json:"id"`
-	Name          string             `json:"name"`
-	IsInternal    bool               `json:"isInternal"`
 	CreatedAt     pgtype.Timestamptz `json:"createdAt"`
 	DeletedAt     pgtype.Timestamptz `json:"deletedAt"`
+	Name          string             `json:"name"`
+	ID            pgtype.UUID        `json:"id"`
 	ApplicationID pgtype.UUID        `json:"applicationId"`
+	IsInternal    bool               `json:"isInternal"`
 }
 
 type Application struct {
-	ID          pgtype.UUID        `json:"id"`
-	Description string             `json:"description"`
-	Name        string             `json:"name"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	UpdatedAt   pgtype.Timestamptz `json:"updatedAt"`
 	DeletedAt   pgtype.Timestamptz `json:"deletedAt"`
+	Description string             `json:"description"`
+	Name        string             `json:"name"`
+	ID          pgtype.UUID        `json:"id"`
 	ProjectID   pgtype.UUID        `json:"projectId"`
 }
 
 type Project struct {
-	ID          pgtype.UUID        `json:"id"`
-	Name        string             `json:"name"`
-	Description string             `json:"description"`
-	Credits     pgtype.Numeric     `json:"credits"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	UpdatedAt   pgtype.Timestamptz `json:"updatedAt"`
 	DeletedAt   pgtype.Timestamptz `json:"deletedAt"`
+	Name        string             `json:"name"`
+	Description string             `json:"description"`
+	Credits     pgtype.Numeric     `json:"credits"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 type ProjectInvitation struct {
-	ID         pgtype.UUID          `json:"id"`
-	Email      string               `json:"email"`
-	ProjectID  pgtype.UUID          `json:"projectId"`
-	Permission AccessPermissionType `json:"permission"`
 	CreatedAt  pgtype.Timestamptz   `json:"createdAt"`
 	UpdatedAt  pgtype.Timestamptz   `json:"updatedAt"`
+	Email      string               `json:"email"`
+	Permission AccessPermissionType `json:"permission"`
+	ID         pgtype.UUID          `json:"id"`
+	ProjectID  pgtype.UUID          `json:"projectId"`
 }
 
 type PromptConfig struct {
-	ID                        pgtype.UUID        `json:"id"`
-	Name                      string             `json:"name"`
-	ModelParameters           []byte             `json:"modelParameters"`
+	CreatedAt                 pgtype.Timestamptz `json:"createdAt"`
+	DeletedAt                 pgtype.Timestamptz `json:"deletedAt"`
+	UpdatedAt                 pgtype.Timestamptz `json:"updatedAt"`
 	ModelType                 ModelType          `json:"modelType"`
 	ModelVendor               ModelVendor        `json:"modelVendor"`
+	Name                      string             `json:"name"`
 	ProviderPromptMessages    []byte             `json:"providerPromptMessages"`
 	ExpectedTemplateVariables []string           `json:"expectedTemplateVariables"`
+	ModelParameters           []byte             `json:"modelParameters"`
+	ID                        pgtype.UUID        `json:"id"`
+	ApplicationID             pgtype.UUID        `json:"applicationId"`
 	IsDefault                 bool               `json:"isDefault"`
 	IsTestConfig              bool               `json:"isTestConfig"`
-	CreatedAt                 pgtype.Timestamptz `json:"createdAt"`
-	UpdatedAt                 pgtype.Timestamptz `json:"updatedAt"`
-	DeletedAt                 pgtype.Timestamptz `json:"deletedAt"`
-	ApplicationID             pgtype.UUID        `json:"applicationId"`
 }
 
 type PromptRequestRecord struct {
-	ID                     pgtype.UUID        `json:"id"`
-	IsStreamResponse       bool               `json:"isStreamResponse"`
-	RequestTokens          int32              `json:"requestTokens"`
-	ResponseTokens         int32              `json:"responseTokens"`
-	RequestTokensCost      pgtype.Numeric     `json:"requestTokensCost"`
-	ResponseTokensCost     pgtype.Numeric     `json:"responseTokensCost"`
+	DeletedAt              pgtype.Timestamptz `json:"deletedAt"`
+	CreatedAt              pgtype.Timestamptz `json:"createdAt"`
 	StartTime              pgtype.Timestamptz `json:"startTime"`
 	FinishTime             pgtype.Timestamptz `json:"finishTime"`
 	FinishReason           PromptFinishReason `json:"finishReason"`
-	DurationMs             pgtype.Int4        `json:"durationMs"`
-	PromptConfigID         pgtype.UUID        `json:"promptConfigId"`
+	RequestTokensCost      pgtype.Numeric     `json:"requestTokensCost"`
+	ResponseTokensCost     pgtype.Numeric     `json:"responseTokensCost"`
 	ErrorLog               pgtype.Text        `json:"errorLog"`
-	CreatedAt              pgtype.Timestamptz `json:"createdAt"`
-	DeletedAt              pgtype.Timestamptz `json:"deletedAt"`
+	DurationMs             pgtype.Int4        `json:"durationMs"`
+	ResponseTokens         int32              `json:"responseTokens"`
+	RequestTokens          int32              `json:"requestTokens"`
+	ID                     pgtype.UUID        `json:"id"`
+	PromptConfigID         pgtype.UUID        `json:"promptConfigId"`
 	ProviderModelPricingID pgtype.UUID        `json:"providerModelPricingId"`
+	IsStreamResponse       bool               `json:"isStreamResponse"`
 }
 
 type PromptTestRecord struct {
-	ID                    pgtype.UUID        `json:"id"`
-	VariableValues        []byte             `json:"variableValues"`
-	Response              string             `json:"response"`
 	CreatedAt             pgtype.Timestamptz `json:"createdAt"`
+	Response              string             `json:"response"`
+	VariableValues        []byte             `json:"variableValues"`
+	ID                    pgtype.UUID        `json:"id"`
 	PromptRequestRecordID pgtype.UUID        `json:"promptRequestRecordId"`
 }
 
 type ProviderKey struct {
-	ID              pgtype.UUID        `json:"id"`
+	CreatedAt       pgtype.Timestamptz `json:"createdAt"`
 	ModelVendor     ModelVendor        `json:"modelVendor"`
 	EncryptedApiKey string             `json:"encryptedApiKey"`
-	CreatedAt       pgtype.Timestamptz `json:"createdAt"`
+	ID              pgtype.UUID        `json:"id"`
 	ProjectID       pgtype.UUID        `json:"projectId"`
 }
 
 type ProviderModelPricing struct {
-	ID               pgtype.UUID        `json:"id"`
+	CreatedAt        pgtype.Timestamptz `json:"createdAt"`
+	ActiveFromDate   pgtype.Date        `json:"activeFromDate"`
+	ActiveToDate     pgtype.Date        `json:"activeToDate"`
 	ModelType        ModelType          `json:"modelType"`
 	ModelVendor      ModelVendor        `json:"modelVendor"`
 	InputTokenPrice  pgtype.Numeric     `json:"inputTokenPrice"`
 	OutputTokenPrice pgtype.Numeric     `json:"outputTokenPrice"`
 	TokenUnitSize    int32              `json:"tokenUnitSize"`
-	CreatedAt        pgtype.Timestamptz `json:"createdAt"`
-	ActiveFromDate   pgtype.Date        `json:"activeFromDate"`
-	ActiveToDate     pgtype.Date        `json:"activeToDate"`
+	ID               pgtype.UUID        `json:"id"`
 }
 
 type UserAccount struct {
-	ID          pgtype.UUID        `json:"id"`
+	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	DisplayName string             `json:"displayName"`
 	Email       string             `json:"email"`
 	FirebaseID  string             `json:"firebaseId"`
 	PhoneNumber string             `json:"phoneNumber"`
 	PhotoUrl    string             `json:"photoUrl"`
-	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 type UserProject struct {
-	UserID     pgtype.UUID          `json:"userId"`
-	ProjectID  pgtype.UUID          `json:"projectId"`
-	Permission AccessPermissionType `json:"permission"`
 	CreatedAt  pgtype.Timestamptz   `json:"createdAt"`
 	UpdatedAt  pgtype.Timestamptz   `json:"updatedAt"`
+	Permission AccessPermissionType `json:"permission"`
+	UserID     pgtype.UUID          `json:"userId"`
+	ProjectID  pgtype.UUID          `json:"projectId"`
 }

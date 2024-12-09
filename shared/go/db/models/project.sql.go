@@ -63,12 +63,12 @@ WHERE p.id = $1 AND p.deleted_at IS NULL
 `
 
 type RetrieveProjectRow struct {
-	ID          pgtype.UUID        `json:"id"`
+	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
+	UpdatedAt   pgtype.Timestamptz `json:"updatedAt"`
 	Description string             `json:"description"`
 	Name        string             `json:"name"`
 	Credits     pgtype.Numeric     `json:"credits"`
-	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
-	UpdatedAt   pgtype.Timestamptz `json:"updatedAt"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrieveProject(ctx context.Context, id pgtype.UUID) (RetrieveProjectRow, error) {
@@ -97,9 +97,9 @@ WHERE
 `
 
 type RetrieveProjectAPIRequestCountParams struct {
-	ID          pgtype.UUID        `json:"id"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	CreatedAt_2 pgtype.Timestamptz `json:"createdAt2"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrieveProjectAPIRequestCount(ctx context.Context, arg RetrieveProjectAPIRequestCountParams) (int64, error) {
@@ -125,18 +125,18 @@ WHERE p.id = $1 AND ua.firebase_id = $2 AND p.deleted_at IS NULL
 `
 
 type RetrieveProjectForUserParams struct {
-	ID         pgtype.UUID `json:"id"`
 	FirebaseID string      `json:"firebaseId"`
+	ID         pgtype.UUID `json:"id"`
 }
 
 type RetrieveProjectForUserRow struct {
-	ID          pgtype.UUID              `json:"id"`
-	Description string                   `json:"description"`
-	Name        string                   `json:"name"`
-	Permission  NullAccessPermissionType `json:"permission"`
-	Credits     pgtype.Numeric           `json:"credits"`
 	CreatedAt   pgtype.Timestamptz       `json:"createdAt"`
 	UpdatedAt   pgtype.Timestamptz       `json:"updatedAt"`
+	Description string                   `json:"description"`
+	Name        string                   `json:"name"`
+	Credits     pgtype.Numeric           `json:"credits"`
+	Permission  NullAccessPermissionType `json:"permission"`
+	ID          pgtype.UUID              `json:"id"`
 }
 
 func (q *Queries) RetrieveProjectForUser(ctx context.Context, arg RetrieveProjectForUserParams) (RetrieveProjectForUserRow, error) {
@@ -166,9 +166,9 @@ WHERE
 `
 
 type RetrieveProjectTokensTotalCostParams struct {
-	ID          pgtype.UUID        `json:"id"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	CreatedAt_2 pgtype.Timestamptz `json:"createdAt2"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrieveProjectTokensTotalCost(ctx context.Context, arg RetrieveProjectTokensTotalCostParams) (pgtype.Numeric, error) {
@@ -195,13 +195,13 @@ WHERE
 `
 
 type RetrieveProjectsRow struct {
-	ID          pgtype.UUID          `json:"id"`
-	Name        pgtype.Text          `json:"name"`
-	Description pgtype.Text          `json:"description"`
-	Permission  AccessPermissionType `json:"permission"`
-	Credits     pgtype.Numeric       `json:"credits"`
 	CreatedAt   pgtype.Timestamptz   `json:"createdAt"`
 	UpdatedAt   pgtype.Timestamptz   `json:"updatedAt"`
+	Permission  AccessPermissionType `json:"permission"`
+	Credits     pgtype.Numeric       `json:"credits"`
+	Name        pgtype.Text          `json:"name"`
+	Description pgtype.Text          `json:"description"`
+	ID          pgtype.UUID          `json:"id"`
 }
 
 func (q *Queries) RetrieveProjects(ctx context.Context, firebaseID string) ([]RetrieveProjectsRow, error) {
@@ -245,9 +245,9 @@ RETURNING id, name, description, credits, created_at, updated_at, deleted_at
 `
 
 type UpdateProjectParams struct {
-	ID          pgtype.UUID `json:"id"`
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
+	ID          pgtype.UUID `json:"id"`
 }
 
 func (q *Queries) UpdateProject(ctx context.Context, arg UpdateProjectParams) (Project, error) {
@@ -272,8 +272,8 @@ WHERE id = $1
 `
 
 type UpdateProjectCreditsParams struct {
-	ID      pgtype.UUID    `json:"id"`
 	Credits pgtype.Numeric `json:"credits"`
+	ID      pgtype.UUID    `json:"id"`
 }
 
 func (q *Queries) UpdateProjectCredits(ctx context.Context, arg UpdateProjectCreditsParams) error {

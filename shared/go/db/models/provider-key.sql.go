@@ -67,9 +67,9 @@ FROM provider_key WHERE project_id = $1
 `
 
 type RetrieveProjectProviderKeysRow struct {
-	ID          pgtype.UUID        `json:"id"`
-	ModelVendor ModelVendor        `json:"modelVendor"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
+	ModelVendor ModelVendor        `json:"modelVendor"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrieveProjectProviderKeys(ctx context.Context, projectID pgtype.UUID) ([]RetrieveProjectProviderKeysRow, error) {
@@ -101,14 +101,14 @@ FROM provider_key WHERE project_id = $1 AND model_vendor = $2
 `
 
 type RetrieveProviderKeyParams struct {
-	ProjectID   pgtype.UUID `json:"projectId"`
 	ModelVendor ModelVendor `json:"modelVendor"`
+	ProjectID   pgtype.UUID `json:"projectId"`
 }
 
 type RetrieveProviderKeyRow struct {
-	ID              pgtype.UUID `json:"id"`
 	ModelVendor     ModelVendor `json:"modelVendor"`
 	EncryptedApiKey string      `json:"encryptedApiKey"`
+	ID              pgtype.UUID `json:"id"`
 }
 
 func (q *Queries) RetrieveProviderKey(ctx context.Context, arg RetrieveProviderKeyParams) (RetrieveProviderKeyRow, error) {

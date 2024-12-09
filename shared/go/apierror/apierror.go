@@ -16,10 +16,10 @@ const ExtraContextKey extraContextKey = iota
 // APIError - represents an API error.
 // Its a type that can render itself into an HTTP response.
 type APIError struct {
+	Extra      any    `json:"extra,omitempty"`
 	Message    string `json:"message"`
 	StatusText string `json:"status"`
 	StatusCode int    `json:"statusCode"`
-	Extra      any    `json:"extra,omitempty"`
 }
 
 // Render - renders the APIError into an HTTP response.

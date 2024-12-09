@@ -23,8 +23,8 @@ RETURNING id, variable_values, response, created_at, prompt_request_record_id
 `
 
 type CreatePromptTestRecordParams struct {
-	VariableValues        []byte      `json:"variableValues"`
 	Response              string      `json:"response"`
+	VariableValues        []byte      `json:"variableValues"`
 	PromptRequestRecordID pgtype.UUID `json:"promptRequestRecordId"`
 }
 
@@ -78,24 +78,24 @@ WHERE ptr.id = $1
 `
 
 type RetrievePromptTestRecordRow struct {
-	ID                     pgtype.UUID        `json:"id"`
-	VariableValues         []byte             `json:"variableValues"`
-	Response               string             `json:"response"`
-	CreatedAt              pgtype.Timestamptz `json:"createdAt"`
-	ErrorLog               pgtype.Text        `json:"errorLog"`
-	StartTime              pgtype.Timestamptz `json:"startTime"`
 	FinishTime             pgtype.Timestamptz `json:"finishTime"`
-	DurationMs             pgtype.Int4        `json:"durationMs"`
-	RequestTokensCost      pgtype.Numeric     `json:"requestTokensCost"`
+	CreatedAt              pgtype.Timestamptz `json:"createdAt"`
+	StartTime              pgtype.Timestamptz `json:"startTime"`
 	ResponseTokensCost     pgtype.Numeric     `json:"responseTokensCost"`
-	RequestTokens          pgtype.Int4        `json:"requestTokens"`
-	ResponseTokens         pgtype.Int4        `json:"responseTokens"`
+	Response               string             `json:"response"`
+	RequestTokensCost      pgtype.Numeric     `json:"requestTokensCost"`
+	ErrorLog               pgtype.Text        `json:"errorLog"`
+	VariableValues         []byte             `json:"variableValues"`
 	ProviderPromptMessages []byte             `json:"providerPromptMessages"`
 	ModelParameters        []byte             `json:"modelParameters"`
 	ModelType              NullModelType      `json:"modelType"`
 	ModelVendor            NullModelVendor    `json:"modelVendor"`
-	IsTestConfig           pgtype.Bool        `json:"isTestConfig"`
+	DurationMs             pgtype.Int4        `json:"durationMs"`
+	RequestTokens          pgtype.Int4        `json:"requestTokens"`
+	ResponseTokens         pgtype.Int4        `json:"responseTokens"`
+	ID                     pgtype.UUID        `json:"id"`
 	PromptConfigID         pgtype.UUID        `json:"promptConfigId"`
+	IsTestConfig           pgtype.Bool        `json:"isTestConfig"`
 }
 
 func (q *Queries) RetrievePromptTestRecord(ctx context.Context, id pgtype.UUID) (RetrievePromptTestRecordRow, error) {
@@ -152,24 +152,24 @@ WHERE a.id = $1
 `
 
 type RetrievePromptTestRecordsRow struct {
-	ID                     pgtype.UUID        `json:"id"`
-	VariableValues         []byte             `json:"variableValues"`
-	Response               string             `json:"response"`
-	CreatedAt              pgtype.Timestamptz `json:"createdAt"`
-	ErrorLog               pgtype.Text        `json:"errorLog"`
-	StartTime              pgtype.Timestamptz `json:"startTime"`
 	FinishTime             pgtype.Timestamptz `json:"finishTime"`
-	DurationMs             pgtype.Int4        `json:"durationMs"`
-	RequestTokensCost      pgtype.Numeric     `json:"requestTokensCost"`
+	CreatedAt              pgtype.Timestamptz `json:"createdAt"`
+	StartTime              pgtype.Timestamptz `json:"startTime"`
 	ResponseTokensCost     pgtype.Numeric     `json:"responseTokensCost"`
-	RequestTokens          pgtype.Int4        `json:"requestTokens"`
-	ResponseTokens         pgtype.Int4        `json:"responseTokens"`
+	Response               string             `json:"response"`
+	RequestTokensCost      pgtype.Numeric     `json:"requestTokensCost"`
+	ErrorLog               pgtype.Text        `json:"errorLog"`
+	VariableValues         []byte             `json:"variableValues"`
 	ProviderPromptMessages []byte             `json:"providerPromptMessages"`
 	ModelParameters        []byte             `json:"modelParameters"`
 	ModelType              NullModelType      `json:"modelType"`
 	ModelVendor            NullModelVendor    `json:"modelVendor"`
-	IsTestConfig           pgtype.Bool        `json:"isTestConfig"`
+	DurationMs             pgtype.Int4        `json:"durationMs"`
+	RequestTokens          pgtype.Int4        `json:"requestTokens"`
+	ResponseTokens         pgtype.Int4        `json:"responseTokens"`
+	ID                     pgtype.UUID        `json:"id"`
 	PromptConfigID         pgtype.UUID        `json:"promptConfigId"`
+	IsTestConfig           pgtype.Bool        `json:"isTestConfig"`
 }
 
 func (q *Queries) RetrievePromptTestRecords(ctx context.Context, id pgtype.UUID) ([]RetrievePromptTestRecordsRow, error) {

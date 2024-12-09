@@ -17,8 +17,8 @@ type MockOpenAIService struct {
 	Error           error
 	ExpectedRequest *openaiconnector.OpenAIPromptRequest
 	Response        *openaiconnector.OpenAIPromptResponse
-	Stream          []*openaiconnector.OpenAIStreamResponse
 	T               *testing.T
+	Stream          []*openaiconnector.OpenAIStreamResponse
 }
 
 func (m MockOpenAIService) OpenAIPrompt(
@@ -85,8 +85,8 @@ type MockPromptTestingService struct {
 	Context         context.Context
 	Error           error
 	ExpectedRequest *ptesting.PromptTestRequest
-	Stream          []*ptesting.PromptTestingStreamingPromptResponse
 	T               *testing.T
+	Stream          []*ptesting.PromptTestingStreamingPromptResponse
 }
 
 func (m MockPromptTestingService) TestPrompt(
@@ -123,8 +123,8 @@ type MockCohereService struct {
 	Error           error
 	ExpectedRequest *cohereconnector.CoherePromptRequest
 	Response        *cohereconnector.CoherePromptResponse
-	Stream          []*cohereconnector.CohereStreamResponse
 	T               *testing.T
+	Stream          []*cohereconnector.CohereStreamResponse
 }
 
 func (m MockCohereService) CoherePrompt(

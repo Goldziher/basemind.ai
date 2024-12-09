@@ -32,18 +32,18 @@ RETURNING id, is_stream_response, request_tokens, response_tokens, request_token
 `
 
 type CreatePromptRequestRecordParams struct {
-	IsStreamResponse       bool               `json:"isStreamResponse"`
-	RequestTokens          int32              `json:"requestTokens"`
-	ResponseTokens         int32              `json:"responseTokens"`
-	RequestTokensCost      pgtype.Numeric     `json:"requestTokensCost"`
-	ResponseTokensCost     pgtype.Numeric     `json:"responseTokensCost"`
 	StartTime              pgtype.Timestamptz `json:"startTime"`
 	FinishTime             pgtype.Timestamptz `json:"finishTime"`
+	RequestTokensCost      pgtype.Numeric     `json:"requestTokensCost"`
+	ResponseTokensCost     pgtype.Numeric     `json:"responseTokensCost"`
+	FinishReason           PromptFinishReason `json:"finishReason"`
+	ErrorLog               pgtype.Text        `json:"errorLog"`
 	DurationMs             pgtype.Int4        `json:"durationMs"`
+	RequestTokens          int32              `json:"requestTokens"`
+	ResponseTokens         int32              `json:"responseTokens"`
 	PromptConfigID         pgtype.UUID        `json:"promptConfigId"`
 	ProviderModelPricingID pgtype.UUID        `json:"providerModelPricingId"`
-	ErrorLog               pgtype.Text        `json:"errorLog"`
-	FinishReason           PromptFinishReason `json:"finishReason"`
+	IsStreamResponse       bool               `json:"isStreamResponse"`
 }
 
 // -- prompt request record

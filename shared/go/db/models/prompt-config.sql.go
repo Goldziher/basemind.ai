@@ -123,17 +123,17 @@ WHERE
 `
 
 type RetrieveDefaultPromptConfigRow struct {
-	ID                        pgtype.UUID        `json:"id"`
-	Name                      string             `json:"name"`
-	ModelParameters           []byte             `json:"modelParameters"`
-	ModelType                 ModelType          `json:"modelType"`
-	ModelVendor               ModelVendor        `json:"modelVendor"`
-	ProviderPromptMessages    []byte             `json:"providerPromptMessages"`
-	ExpectedTemplateVariables []string           `json:"expectedTemplateVariables"`
-	IsDefault                 bool               `json:"isDefault"`
 	CreatedAt                 pgtype.Timestamptz `json:"createdAt"`
 	UpdatedAt                 pgtype.Timestamptz `json:"updatedAt"`
+	Name                      string             `json:"name"`
+	ModelType                 ModelType          `json:"modelType"`
+	ModelVendor               ModelVendor        `json:"modelVendor"`
+	ModelParameters           []byte             `json:"modelParameters"`
+	ProviderPromptMessages    []byte             `json:"providerPromptMessages"`
+	ExpectedTemplateVariables []string           `json:"expectedTemplateVariables"`
+	ID                        pgtype.UUID        `json:"id"`
 	ApplicationID             pgtype.UUID        `json:"applicationId"`
+	IsDefault                 bool               `json:"isDefault"`
 }
 
 func (q *Queries) RetrieveDefaultPromptConfig(ctx context.Context, applicationID pgtype.UUID) (RetrieveDefaultPromptConfigRow, error) {
@@ -176,17 +176,17 @@ WHERE
 `
 
 type RetrievePromptConfigRow struct {
-	ID                        pgtype.UUID        `json:"id"`
-	Name                      string             `json:"name"`
-	ModelParameters           []byte             `json:"modelParameters"`
-	ModelType                 ModelType          `json:"modelType"`
-	ModelVendor               ModelVendor        `json:"modelVendor"`
-	ProviderPromptMessages    []byte             `json:"providerPromptMessages"`
-	ExpectedTemplateVariables []string           `json:"expectedTemplateVariables"`
-	IsDefault                 bool               `json:"isDefault"`
 	CreatedAt                 pgtype.Timestamptz `json:"createdAt"`
 	UpdatedAt                 pgtype.Timestamptz `json:"updatedAt"`
+	Name                      string             `json:"name"`
+	ModelType                 ModelType          `json:"modelType"`
+	ModelVendor               ModelVendor        `json:"modelVendor"`
+	ModelParameters           []byte             `json:"modelParameters"`
+	ProviderPromptMessages    []byte             `json:"providerPromptMessages"`
+	ExpectedTemplateVariables []string           `json:"expectedTemplateVariables"`
+	ID                        pgtype.UUID        `json:"id"`
 	ApplicationID             pgtype.UUID        `json:"applicationId"`
+	IsDefault                 bool               `json:"isDefault"`
 	IsTestConfig              bool               `json:"isTestConfig"`
 }
 
@@ -220,9 +220,9 @@ WHERE
 `
 
 type RetrievePromptConfigAPIRequestCountParams struct {
-	ID          pgtype.UUID        `json:"id"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	CreatedAt_2 pgtype.Timestamptz `json:"createdAt2"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrievePromptConfigAPIRequestCount(ctx context.Context, arg RetrievePromptConfigAPIRequestCountParams) (int64, error) {
@@ -242,9 +242,9 @@ WHERE
 `
 
 type RetrievePromptConfigTokensTotalCostParams struct {
-	ID          pgtype.UUID        `json:"id"`
 	CreatedAt   pgtype.Timestamptz `json:"createdAt"`
 	CreatedAt_2 pgtype.Timestamptz `json:"createdAt2"`
+	ID          pgtype.UUID        `json:"id"`
 }
 
 func (q *Queries) RetrievePromptConfigTokensTotalCost(ctx context.Context, arg RetrievePromptConfigTokensTotalCostParams) (pgtype.Numeric, error) {
@@ -275,17 +275,17 @@ WHERE
 `
 
 type RetrievePromptConfigsRow struct {
-	ID                        pgtype.UUID        `json:"id"`
-	Name                      string             `json:"name"`
-	ModelParameters           []byte             `json:"modelParameters"`
-	ModelType                 ModelType          `json:"modelType"`
-	ModelVendor               ModelVendor        `json:"modelVendor"`
-	ProviderPromptMessages    []byte             `json:"providerPromptMessages"`
-	ExpectedTemplateVariables []string           `json:"expectedTemplateVariables"`
-	IsDefault                 bool               `json:"isDefault"`
 	CreatedAt                 pgtype.Timestamptz `json:"createdAt"`
 	UpdatedAt                 pgtype.Timestamptz `json:"updatedAt"`
+	Name                      string             `json:"name"`
+	ModelType                 ModelType          `json:"modelType"`
+	ModelVendor               ModelVendor        `json:"modelVendor"`
+	ModelParameters           []byte             `json:"modelParameters"`
+	ProviderPromptMessages    []byte             `json:"providerPromptMessages"`
+	ExpectedTemplateVariables []string           `json:"expectedTemplateVariables"`
+	ID                        pgtype.UUID        `json:"id"`
 	ApplicationID             pgtype.UUID        `json:"applicationId"`
+	IsDefault                 bool               `json:"isDefault"`
 }
 
 func (q *Queries) RetrievePromptConfigs(ctx context.Context, applicationID pgtype.UUID) ([]RetrievePromptConfigsRow, error) {
@@ -359,13 +359,13 @@ RETURNING id, name, model_parameters, model_type, model_vendor, provider_prompt_
 `
 
 type UpdatePromptConfigParams struct {
-	ID                        pgtype.UUID `json:"id"`
 	Name                      string      `json:"name"`
-	ModelParameters           []byte      `json:"modelParameters"`
 	ModelType                 ModelType   `json:"modelType"`
 	ModelVendor               ModelVendor `json:"modelVendor"`
+	ModelParameters           []byte      `json:"modelParameters"`
 	ProviderPromptMessages    []byte      `json:"providerPromptMessages"`
 	ExpectedTemplateVariables []string    `json:"expectedTemplateVariables"`
+	ID                        pgtype.UUID `json:"id"`
 	IsTestConfig              bool        `json:"isTestConfig"`
 }
 

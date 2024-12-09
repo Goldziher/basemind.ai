@@ -45,9 +45,9 @@ RETURNING user_id, project_id, permission, created_at, updated_at
 `
 
 type CreateUserProjectParams struct {
+	Permission AccessPermissionType `json:"permission"`
 	UserID     pgtype.UUID          `json:"userId"`
 	ProjectID  pgtype.UUID          `json:"projectId"`
-	Permission AccessPermissionType `json:"permission"`
 }
 
 func (q *Queries) CreateUserProject(ctx context.Context, arg CreateUserProjectParams) (UserProject, error) {
@@ -125,9 +125,9 @@ RETURNING user_id, project_id, permission, created_at, updated_at
 `
 
 type UpdateUserProjectPermissionParams struct {
+	Permission AccessPermissionType `json:"permission"`
 	UserID     pgtype.UUID          `json:"userId"`
 	ProjectID  pgtype.UUID          `json:"projectId"`
-	Permission AccessPermissionType `json:"permission"`
 }
 
 func (q *Queries) UpdateUserProjectPermission(ctx context.Context, arg UpdateUserProjectPermissionParams) (UserProject, error) {

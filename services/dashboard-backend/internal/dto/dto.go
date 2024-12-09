@@ -9,11 +9,11 @@ import (
 
 // ApplicationDTO - DTO for serializing application data.
 type ApplicationDTO struct { // skipcq: TCV-001
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 	ID          string    `json:"id"`
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
-	CreatedAt   time.Time `json:"createdAt"`
-	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
 // ProjectDTO - DTO for serializing project data.
@@ -30,11 +30,11 @@ type ProjectDTO struct { // skipcq: TCV-001
 
 // PromptConfigCreateDTO - DTO for prompt config CREATE request body.
 type PromptConfigCreateDTO struct { // skipcq: TCV-001
-	Name                   string             `json:"name"            validate:"required"`
 	ModelParameters        *json.RawMessage   `json:"modelParameters" validate:"required"`
+	ProviderPromptMessages *json.RawMessage   `json:"promptMessages"  validate:"required"`
+	Name                   string             `json:"name"            validate:"required"`
 	ModelType              models.ModelType   `json:"modelType"       validate:"oneof=gpt-3.5-turbo gpt-3.5-turbo-16k gpt-4 gpt-4-32k command command-light command-nightly command-light-nightly"`
 	ModelVendor            models.ModelVendor `json:"modelVendor"     validate:"oneof=OPEN_AI COHERE"`
-	ProviderPromptMessages *json.RawMessage   `json:"promptMessages"  validate:"required"`
 	IsTest                 bool               `json:"isTest"`
 }
 
@@ -49,10 +49,10 @@ type PromptConfigUpdateDTO struct { // skipcq: TCV-001
 
 // ApplicationAPIKeyDTO - DTO for serializing application api key data.
 type ApplicationAPIKeyDTO struct { // skipcq: TCV-001
-	ID        string    `json:"id"`
 	CreatedAt time.Time `json:"createdAt"`
-	Name      string    `json:"name"           validate:"required"`
 	Hash      *string   `json:"hash,omitempty"`
+	ID        string    `json:"id"`
+	Name      string    `json:"name"           validate:"required"`
 }
 
 // AddUserAccountToProjectDTO - DTO for add user to project request body.
@@ -81,18 +81,18 @@ type ProjectUserAccountDTO struct { // skipcq: TCV-001
 
 // AnalyticsDTO - DTO for serializing analytics data.
 type AnalyticsDTO struct { // skipcq: TCV-001
-	TotalAPICalls int64           `json:"totalRequests"`
 	TokenCost     decimal.Decimal `json:"tokensCost"`
+	TotalAPICalls int64           `json:"totalRequests"`
 }
 
 // PromptConfigTestDTO - DTO for requesting a prompt config test.
-type PromptConfigTestDTO struct { // skipcq: TCV-001
+type PromptConfigTestDTO struct {
 	ModelParameters        *json.RawMessage   `json:"modelParameters,omitempty"   validate:"omitempty,required"`
-	ModelType              models.ModelType   `json:"modelType"                   validate:"oneof=gpt-3.5-turbo gpt-3.5-turbo-16k gpt-4 gpt-4-32k command command-light command-nightly command-light-nightly"`
-	ModelVendor            models.ModelVendor `json:"modelVendor"                 validate:"oneof=OPEN_AI COHERE"`
 	ProviderPromptMessages *json.RawMessage   `json:"promptMessages,omitempty"    validate:"omitempty,required"`
 	TemplateVariables      map[string]string  `json:"templateVariables,omitempty"`
 	PromptConfigID         *string            `json:"promptConfigId,omitempty"    validate:"omitempty,required,uuid4"`
+	ModelType              models.ModelType   `json:"modelType"                   validate:"oneof=gpt-3.5-turbo gpt-3.5-turbo-16k gpt-4 gpt-4-32k command command-light command-nightly command-light-nightly"`
+	ModelVendor            models.ModelVendor `json:"modelVendor"                 validate:"oneof=OPEN_AI COHERE"`
 }
 
 // PromptConfigTestResultDTO - DTO for serializing prompt config test results.
@@ -124,39 +124,39 @@ type ProviderKeyCreateDTO struct { // skipcq: TCV-001
 }
 
 type ProviderKeyDTO struct { // skipcq: TCV-001
+	CreatedAt   time.Time          `json:"createdAt"`
 	ID          string             `json:"id"`
 	ModelVendor models.ModelVendor `json:"modelVendor"`
-	CreatedAt   time.Time          `json:"createdAt"`
 }
 
 // PromptTestRecordDTO - DTO for serializing prompt test record data.
 type PromptTestRecordDTO struct {
-	ID                     string             `json:"id"`
 	CreatedAt              time.Time          `json:"createdAt"`
-	DurationMs             int32              `json:"durationMs"`
-	ErrorLog               *string            `json:"errorLog,omitempty"`
-	FinishTime             time.Time          `json:"finishTime"`
-	ModelParameters        json.RawMessage    `json:"modelParameters"`
-	ModelType              models.ModelType   `json:"modelType"`
-	ModelVendor            models.ModelVendor `json:"modelVendor"`
-	Name                   string             `json:"name"`
-	PromptConfigID         *string            `json:"promptConfigId,omitempty"`
-	PromptResponse         string             `json:"promptResponse"`
-	ProviderPromptMessages json.RawMessage    `json:"providerPromptMessages"`
-	RequestTokens          int32              `json:"requestTokens"`
-	RequestTokensCost      decimal.Decimal    `json:"requestTokensCost"`
-	ResponseTokens         int32              `json:"responseTokens"`
-	ResponseTokensCost     decimal.Decimal    `json:"responseTokensCost"`
 	StartTime              time.Time          `json:"startTime"`
+	FinishTime             time.Time          `json:"finishTime"`
+	PromptConfigID         *string            `json:"promptConfigId,omitempty"`
+	ErrorLog               *string            `json:"errorLog,omitempty"`
+	Name                   string             `json:"name"`
+	RequestTokensCost      decimal.Decimal    `json:"requestTokensCost"`
+	ModelVendor            models.ModelVendor `json:"modelVendor"`
+	ID                     string             `json:"id"`
+	ModelType              models.ModelType   `json:"modelType"`
+	PromptResponse         string             `json:"promptResponse"`
 	TotalTokensCost        decimal.Decimal    `json:"totalTokensCost"`
+	ResponseTokensCost     decimal.Decimal    `json:"responseTokensCost"`
+	ModelParameters        json.RawMessage    `json:"modelParameters"`
+	ProviderPromptMessages json.RawMessage    `json:"providerPromptMessages"`
 	UserInput              json.RawMessage    `json:"userInput"`
+	ResponseTokens         int32              `json:"responseTokens"`
+	RequestTokens          int32              `json:"requestTokens"`
+	DurationMs             int32              `json:"durationMs"`
 }
 
 // ProjectInvitationDTO - DTO for serializing project invitation data.
 type ProjectInvitationDTO struct { // skipcq: TCV-001
-	ID         string    `json:"id"`
 	CreatedAt  time.Time `json:"createdAt"`
+	UpdatedAt  time.Time `json:"updatedAt"`
+	ID         string    `json:"id"`
 	Email      string    `json:"email"`
 	Permission string    `json:"permission"`
-	UpdatedAt  time.Time `json:"updatedAt"`
 }

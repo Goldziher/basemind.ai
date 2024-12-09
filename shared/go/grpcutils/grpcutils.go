@@ -67,14 +67,14 @@ type ServiceRegistrar func(s grpc.ServiceRegistrar)
 
 // Options is a struct that contains options for creating a grpc server.
 type Options struct {
-	// Environment is the current environment. Can be 'testing', 'development' or 'production'
-	Environment string
-	// ServiceRegistrars is a list of functions that register services with the grpc server.
-	ServiceRegistrars []ServiceRegistrar
-	// ServiceName is the name of the service. Used for logging.
-	ServiceName string
 	// AuthHandler is the auth handler function for the service.
 	AuthHandler auth.AuthFunc
+	// Environment is the current environment. Can be 'testing', 'development' or 'production'
+	Environment string
+	// ServiceName is the name of the service. Used for logging.
+	ServiceName string
+	// ServiceRegistrars is a list of functions that register services with the grpc server.
+	ServiceRegistrars []ServiceRegistrar
 }
 
 // RecoveryHandler is a handler for the grpc recovery interceptor.
