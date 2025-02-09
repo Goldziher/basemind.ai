@@ -40,7 +40,7 @@ jobs:
               with:
                   node-version: 21
             - name: Install PNPM
-              uses: pnpm/action-setup@v3.0.0
+              uses: pnpm/action-setup@v4.1.0
               id: pnpm-install
               with:
                   version: 8
